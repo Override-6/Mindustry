@@ -12,29 +12,17 @@ import mindustry.world.blocks.*;
 import static mindustry.Vars.*;
 
 public class GameState{
-    /** Current wave number, can be anything in non-wave modes. */
     public int wave = 1;
-    /** Wave countdown in ticks. */
     public float wavetime;
-    /** Logic tick. */
     public double tick;
-    /** Whether the game is in game over state. */
     public boolean gameOver = false, serverPaused = false;
-    /** Server ticks/second. Only valid in multiplayer. */
     public int serverTps = -1;
-    /** Map that is currently being played on. */
     public Map map = emptyMap;
-    /** The current game rules. */
     public Rules rules = new Rules();
-    /** Statistics for this save/game. Displayed after game over. */
     public GameStats stats = new GameStats();
-    /** Global attributes of the environment, calculated by weather. */
     public Attributes envAttrs = new Attributes();
-    /** Team data. Gets reset every new game. */
     public Teams teams = new Teams();
-    /** Number of enemies in the game; only used clientside in servers. */
     public int enemies;
-    /** Current game state. */
     private State state = State.menu;
 
     @Nullable
@@ -47,7 +35,7 @@ public class GameState{
         if(astate == State.paused && net.active()) return;
 
         Events.fire(new StateChangeEvent(state, astate));
-        state = astate;
+        setState(astate);
     }
 
     public boolean hasSpawns(){
@@ -94,6 +82,71 @@ public class GameState{
     }
 
     public State getState(){
+        return state;
+    }
+
+    public int setWave(int wave) {
+        this.wave = wave;
+        return wave;
+    }
+
+    public float setWavetime(float wavetime) {
+        this.wavetime = wavetime;
+        return wavetime;
+    }
+
+    public double setTick(double tick) {
+        this.tick = tick;
+        return tick;
+    }
+
+    public boolean setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
+        return gameOver;
+    }
+
+    public boolean setServerPaused(boolean serverPaused) {
+        this.serverPaused = serverPaused;
+        return serverPaused;
+    }
+
+    public int setServerTps(int serverTps) {
+        this.serverTps = serverTps;
+        return serverTps;
+    }
+
+    public Map setMap(Map map) {
+        this.map = map;
+        return map;
+    }
+
+    public Rules setRules(Rules rules) {
+        this.rules = rules;
+        return rules;
+    }
+
+    public GameStats setStats(GameStats stats) {
+        this.stats = stats;
+        return stats;
+    }
+
+    public Attributes setEnvAttrs(Attributes envAttrs) {
+        this.envAttrs = envAttrs;
+        return envAttrs;
+    }
+
+    public Teams setTeams(Teams teams) {
+        this.teams = teams;
+        return teams;
+    }
+
+    public int setEnemies(int enemies) {
+        this.enemies = enemies;
+        return enemies;
+    }
+
+    public State setState(State state) {
+        this.state = state;
         return state;
     }
 

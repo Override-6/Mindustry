@@ -637,19 +637,19 @@ public class SerpuloPlanetGenerator extends PlanetGenerator{
         if(sector.hasEnemyBase()){
             basegen.generate(tiles, enemies.map(r -> tiles.getn(r.x, r.y)), tiles.get(spawn.x, spawn.y), state.rules.waveTeam, sector, difficulty);
 
-            state.rules.attackMode = sector.info.attack = true;
+            state.rules.setAttackMode(sector.info.attack = true);
         }else{
-            state.rules.winWave = sector.info.winWave = 10 + 5 * (int)Math.max(difficulty * 10, 1);
+            state.rules.setWinWave(sector.info.winWave = 10 + 5 * (int)Math.max(difficulty * 10, 1));
         }
 
         float waveTimeDec = 0.4f;
 
-        state.rules.waveSpacing = Mathf.lerp(60 * 65 * 2, 60f * 60f * 1f, Math.max(difficulty - waveTimeDec, 0f));
-        state.rules.waves = sector.info.waves = true;
-        state.rules.enemyCoreBuildRadius = 600f;
+        state.rules.setWaveSpacing(Mathf.lerp(60 * 65 * 2, 60f * 60f * 1f, Math.max(difficulty - waveTimeDec, 0f)));
+        state.rules.setWaves(sector.info.waves = true);
+        state.rules.setEnemyCoreBuildRadius(600f);
 
         //spawn air only when spawn is blocked
-        state.rules.spawns = Waves.generate(difficulty, new Rand(sector.id), state.rules.attackMode, state.rules.attackMode && spawner.countGroundSpawns() == 0, naval);
+        state.rules.setSpawns(Waves.generate(difficulty, new Rand(sector.id), state.rules.attackMode, state.rules.attackMode && spawner.countGroundSpawns() == 0, naval));
     }
 
     @Override

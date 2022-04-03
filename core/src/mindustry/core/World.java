@@ -178,7 +178,7 @@ public class World{
         clearTileEntities();
 
         if(tiles.width != width || tiles.height != height){
-            tiles = new Tiles(width, height);
+            setTiles(new Tiles(width, height));
         }
 
         return tiles;
@@ -253,7 +253,7 @@ public class World{
                 throw new RuntimeException("Sector " + sector.id + " on planet " + sector.planet.name + " has no generator or preset defined. Provide a planet generator or preset map.");
             }
             //just in case
-            state.rules.sector = sector;
+            state.rules.setSector(sector);
         });
 
         //postgenerate for bases
@@ -270,8 +270,8 @@ public class World{
     }
 
     private void setSectorRules(Sector sector){
-        state.map = new Map(StringMap.of("name", sector.preset == null ? sector.planet.localizedName + "; Sector " + sector.id : sector.preset.localizedName));
-        state.rules.sector = sector;
+        state.setMap(new Map(StringMap.of("name", sector.preset == null ? sector.planet.localizedName + "; Sector " + sector.id : sector.preset.localizedName)));
+        state.rules.setSector(sector);
         state.rules.weather.clear();
 
         sector.planet.generator.addWeather(sector, state.rules);
@@ -290,8 +290,8 @@ public class World{
             if(liquid != null) content.add(liquid);
         }
 
-        state.rules.cloudColor = sector.planet.landCloudColor;
-        sector.info.resources = content.asArray();
+        state.rules.setCloudColor(sector.planet.landCloudColor);
+        sector.info.resources = content.toSeq();
         sector.info.resources.sort(Structs.comps(Structs.comparing(Content::getContentType), Structs.comparingInt(c -> c.id)));
         sector.saveInfo();
     }
@@ -324,7 +324,7 @@ public class World{
             return;
         }
 
-        state.map = map;
+        state.setMap(map);
 
         invalidMap = false;
 
@@ -520,6 +520,11 @@ public class World{
         }
 
         return dark;
+    }
+
+    public Tiles setTiles(Tiles tiles) {
+        this.tiles = tiles;
+        return tiles;
     }
 
     private class Context implements WorldContext{

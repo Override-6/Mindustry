@@ -56,7 +56,7 @@ public class CustomRulesDialog extends BaseDialog{
                     t.add("@empty");
                 }
 
-                Seq<T> array = set.asArray();
+                Seq<T> array = set.toSeq();
                 array.sort();
 
                 int cols = mobile && Core.graphics.isPortrait() ? 1 : mobile ? 2 : 3;
@@ -138,23 +138,23 @@ public class CustomRulesDialog extends BaseDialog{
         main.row();
 
         title("@rules.title.waves");
-        check("@rules.waves", b -> rules.waves = b, () -> rules.waves);
-        check("@rules.wavetimer", b -> rules.waveTimer = b, () -> rules.waveTimer);
-        check("@rules.waitForWaveToEnd", b -> rules.waitEnemies = b, () -> rules.waitEnemies);
-        number("@rules.wavespacing", false, f -> rules.waveSpacing = f * 60f, () -> rules.waveSpacing / 60f, () -> true, 1, Float.MAX_VALUE);
-        number("@rules.dropzoneradius", false, f -> rules.dropZoneRadius = f * tilesize, () -> rules.dropZoneRadius / tilesize, () -> true);
+        check("@rules.waves", b -> rules.setWaves(b), () -> rules.waves);
+        check("@rules.wavetimer", b -> rules.setWaveTimer(b), () -> rules.waveTimer);
+        check("@rules.waitForWaveToEnd", b -> rules.setWaitEnemies(b), () -> rules.waitEnemies);
+        number("@rules.wavespacing", false, f -> rules.setWaveSpacing(f * 60f), () -> rules.waveSpacing / 60f, () -> true, 1, Float.MAX_VALUE);
+        number("@rules.dropzoneradius", false, f -> rules.setDropZoneRadius(f * tilesize), () -> rules.dropZoneRadius / tilesize, () -> true);
 
         title("@rules.title.resourcesbuilding");
-        check("@rules.infiniteresources", b -> rules.infiniteResources = b, () -> rules.infiniteResources);
-        check("@rules.reactorexplosions", b -> rules.reactorExplosions = b, () -> rules.reactorExplosions);
-        check("@rules.schematic", b -> rules.schematicsAllowed = b, () -> rules.schematicsAllowed);
-        check("@rules.coreincinerates", b -> rules.coreIncinerates = b, () -> rules.coreIncinerates);
-        check("@rules.cleanupdeadteams", b -> rules.cleanupDeadTeams = b, () -> rules.cleanupDeadTeams, () -> rules.pvp);
-        number("@rules.buildcostmultiplier", false, f -> rules.buildCostMultiplier = f, () -> rules.buildCostMultiplier, () -> !rules.infiniteResources);
-        number("@rules.buildspeedmultiplier", f -> rules.buildSpeedMultiplier = f, () -> rules.buildSpeedMultiplier, 0.001f, 50f);
-        number("@rules.deconstructrefundmultiplier", false, f -> rules.deconstructRefundMultiplier = f, () -> rules.deconstructRefundMultiplier, () -> !rules.infiniteResources);
-        number("@rules.blockhealthmultiplier", f -> rules.blockHealthMultiplier = f, () -> rules.blockHealthMultiplier);
-        number("@rules.blockdamagemultiplier", f -> rules.blockDamageMultiplier = f, () -> rules.blockDamageMultiplier);
+        check("@rules.infiniteresources", b -> rules.setInfiniteResources(b), () -> rules.infiniteResources);
+        check("@rules.reactorexplosions", b -> rules.setReactorExplosions(b), () -> rules.reactorExplosions);
+        check("@rules.schematic", b -> rules.setSchematicsAllowed(b), () -> rules.schematicsAllowed);
+        check("@rules.coreincinerates", b -> rules.setCoreIncinerates(b), () -> rules.coreIncinerates);
+        check("@rules.cleanupdeadteams", b -> rules.setCleanupDeadTeams(b), () -> rules.cleanupDeadTeams, () -> rules.pvp);
+        number("@rules.buildcostmultiplier", false, f -> rules.setBuildCostMultiplier(f), () -> rules.buildCostMultiplier, () -> !rules.infiniteResources);
+        number("@rules.buildspeedmultiplier", f -> rules.setBuildSpeedMultiplier(f), () -> rules.buildSpeedMultiplier, 0.001f, 50f);
+        number("@rules.deconstructrefundmultiplier", false, f -> rules.setDeconstructRefundMultiplier(f), () -> rules.deconstructRefundMultiplier, () -> !rules.infiniteResources);
+        number("@rules.blockhealthmultiplier", f -> rules.setBlockHealthMultiplier(f), () -> rules.blockHealthMultiplier);
+        number("@rules.blockdamagemultiplier", f -> rules.setBlockDamageMultiplier(f), () -> rules.blockDamageMultiplier);
 
         main.button("@configure",
             () -> loadoutDialog.show(999999, rules.loadout,
@@ -168,27 +168,27 @@ public class CustomRulesDialog extends BaseDialog{
         main.row();
 
         title("@rules.title.unit");
-        check("@rules.unitammo", b -> rules.unitAmmo = b, () -> rules.unitAmmo);
-        check("@rules.unitcapvariable", b -> rules.unitCapVariable = b, () -> rules.unitCapVariable);
-        number("@rules.unitcap", true, f -> rules.unitCap = f, () -> rules.unitCap, -999, 999);
-        number("@rules.unitdamagemultiplier", f -> rules.unitDamageMultiplier = f, () -> rules.unitDamageMultiplier);
-        number("@rules.unitbuildspeedmultiplier", f -> rules.unitBuildSpeedMultiplier = f, () -> rules.unitBuildSpeedMultiplier, 0.001f, 50f);
+        check("@rules.unitammo", b -> rules.setUnitAmmo(b), () -> rules.unitAmmo);
+        check("@rules.unitcapvariable", b -> rules.setUnitCapVariable(b), () -> rules.unitCapVariable);
+        number("@rules.unitcap", true, f -> rules.setUnitCap(f), () -> rules.unitCap, -999, 999);
+        number("@rules.unitdamagemultiplier", f -> rules.setUnitDamageMultiplier(f), () -> rules.unitDamageMultiplier);
+        number("@rules.unitbuildspeedmultiplier", f -> rules.setUnitBuildSpeedMultiplier(f), () -> rules.unitBuildSpeedMultiplier, 0.001f, 50f);
 
         main.button("@bannedunits", () -> showBanned("@bannedunits", ContentType.unit, rules.bannedUnits, u -> !u.isHidden())).left().width(300f);
         main.row();
 
         title("@rules.title.enemy");
-        check("@rules.attack", b -> rules.attackMode = b, () -> rules.attackMode);
+        check("@rules.attack", b -> rules.setAttackMode(b), () -> rules.attackMode);
         check("@rules.buildai", b -> rules.teams.get(rules.waveTeam).ai = rules.teams.get(rules.waveTeam).infiniteResources = b, () -> rules.teams.get(rules.waveTeam).ai);
-        check("@rules.corecapture", b -> rules.coreCapture = b, () -> rules.coreCapture);
-        check("@rules.polygoncoreprotection", b -> rules.polygonCoreProtection = b, () -> rules.polygonCoreProtection);
-        number("@rules.enemycorebuildradius", f -> rules.enemyCoreBuildRadius = f * tilesize, () -> Math.min(rules.enemyCoreBuildRadius / tilesize, 200), () -> !rules.polygonCoreProtection);
+        check("@rules.corecapture", b -> rules.setCoreCapture(b), () -> rules.coreCapture);
+        check("@rules.polygoncoreprotection", b -> rules.setPolygonCoreProtection(b), () -> rules.polygonCoreProtection);
+        number("@rules.enemycorebuildradius", f -> rules.setEnemyCoreBuildRadius(f * tilesize), () -> Math.min(rules.enemyCoreBuildRadius / tilesize, 200), () -> !rules.polygonCoreProtection);
 
         title("@rules.title.environment");
-        check("@rules.explosions", b -> rules.damageExplosions = b, () -> rules.damageExplosions);
-        check("@rules.fire", b -> rules.fire = b, () -> rules.fire);
-        check("@rules.lighting", b -> rules.lighting = b, () -> rules.lighting);
-        check("@rules.enemyLights", b -> rules.enemyLights = b, () -> rules.enemyLights);
+        check("@rules.explosions", b -> rules.setDamageExplosions(b), () -> rules.damageExplosions);
+        check("@rules.fire", b -> rules.setFire(b), () -> rules.fire);
+        check("@rules.lighting", b -> rules.setLighting(b), () -> rules.lighting);
+        check("@rules.enemyLights", b -> rules.setEnemyLights(b), () -> rules.enemyLights);
 
         main.button(b -> {
             b.left();
@@ -204,8 +204,8 @@ public class CustomRulesDialog extends BaseDialog{
 
         title("@rules.title.teams");
 
-        team("@rules.playerteam", t -> rules.defaultTeam = t, () -> rules.defaultTeam);
-        team("@rules.enemyteam", t -> rules.waveTeam = t, () -> rules.waveTeam);
+        team("@rules.playerteam", t -> rules.setDefaultTeam(t), () -> rules.defaultTeam);
+        team("@rules.enemyteam", t -> rules.setWaveTeam(t), () -> rules.waveTeam);
 
         for(Team team : Team.baseTeams){
             boolean[] shown = {false};

@@ -249,9 +249,13 @@ project(":desktop"){
 
         if(debugged()) implementation project(":debug")
 
+        implementation fileTree(include: ['*.jar'], dir: 'C:\\Users\\maxim\\IdeaProjects\\Linkit\\Engine\\build\\libs')
+        implementation fileTree(include: ['*.jar'], dir: 'C:\\Users\\maxim\\IdeaProjects\\Linkit\\Client\\build\\libs')
+
         implementation "com.github.Anuken:steamworks4j:$steamworksVersion"
 
         implementation arcModule("backends:backend-sdl")
+
     }
 }
 
@@ -378,6 +382,10 @@ project(":core"){
         annotationProcessor 'com.github.Anuken:jabel:0.6.0'
         compileOnly project(":annotations")
         kapt project(":annotations")
+
+        implementation fileTree(include: ['*.jar'], dir: 'C:\\Users\\maxim\\IdeaProjects\\Linkit\\Engine\\build\\libs')
+        implementation fileTree(include: ['*.jar'], dir: 'C:\\Users\\maxim\\IdeaProjects\\Linkit\\Client\\build\\libs')
+        implementation fileTree(include: ['*.jar'], dir: 'C:\\Users\\maxim\\IdeaProjects\\Linkit\\Server\\build\\libs')
     }
 
     afterEvaluate{
@@ -414,6 +422,9 @@ project(":server"){
     dependencies{
         implementation project(":core")
         implementation arcModule("backends:backend-headless")
+
+        implementation fileTree(include: ['*.jar'], dir: 'C:\\Users\\maxim\\IdeaProjects\\Linkit\\Engine\\build\\libs')
+        implementation fileTree(include: ['*.jar'], dir: 'C:\\Users\\maxim\\IdeaProjects\\Linkit\\Server\\build\\libs')
     }
 }
 

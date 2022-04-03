@@ -63,7 +63,7 @@ public class MapIO{
     }
 
     public static Pixmap generatePreview(Map map) throws IOException{
-        map.spawns = 0;
+        map.setSpawns(0);
         map.teams.clear();
 
         try(InputStream is = new InflaterInputStream(map.file.read(bufferSize)); CounterInputStream counter = new CounterInputStream(is); DataInputStream stream = new DataInputStream(counter)){
@@ -136,7 +136,7 @@ public class MapIO{
                         floors.set(x, floors.height - 1 - y, colorFor(Blocks.air, content.block(floorID), Blocks.air, Team.derelict));
                     }
                     if(content.block(overlayID) == Blocks.spawn){
-                        map.spawns ++;
+                        map.setSpawns(map.spawns + 1);
                     }
                     return tile;
                 }

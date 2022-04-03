@@ -178,9 +178,9 @@ public class ArcNetProvider implements NetProvider{
     public void sendClient(Object object, boolean reliable){
         try{
             if(reliable){
-                client.sendTCP(object);
+                //client.sendTCP(object);
             }else{
-                client.sendUDP(object);
+                //client.sendUDP(object);
             }
             //sending things can cause an under/overflow, catch it and disconnect instead of crashing
         }catch(BufferOverflowException | BufferUnderflowException e){
@@ -320,9 +320,9 @@ public class ArcNetProvider implements NetProvider{
         public void send(Object object, boolean reliable){
             try{
                 if(reliable){
-                    connection.sendTCP(object);
+                    //connection.sendTCP(object);
                 }else{
-                    connection.sendUDP(object);
+                    //connection.sendUDP(object);
                 }
             }catch(Exception e){
                 Log.err(e);

@@ -90,7 +90,7 @@ public class Universe{
 
             //assign and map so darkness is not 100% dark
             state.rules.ambientLight.a = 1f - alpha;
-            state.rules.lighting = !Mathf.equal(alpha, 1f);
+            state.rules.setLighting(!Mathf.equal(alpha, 1f));
         }
     }
 
@@ -252,9 +252,9 @@ public class Universe{
 
                             //assign invasion-related things
                             if(sector.isBeingPlayed()){
-                                state.rules.winWave = waveMax;
-                                state.rules.waves = true;
-                                state.rules.attackMode = false;
+                                state.rules.setWinWave(waveMax);
+                                state.rules.setWaves(true);
+                                state.rules.setAttackMode(false);
                                 //update rules in multiplayer
                                 if(net.server()){
                                     Call.setRules(state.rules);

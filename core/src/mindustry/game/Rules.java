@@ -181,6 +181,301 @@ public class Rules{
         return buildSpeedMultiplier * teams.get(team).buildSpeedMultiplier;
     }
 
+    public boolean setInfiniteResources(boolean infiniteResources) {
+        this.infiniteResources = infiniteResources;
+        return infiniteResources;
+    }
+
+    public TeamRules setTeams(TeamRules teams) {
+        this.teams = teams;
+        return teams;
+    }
+
+    public boolean setWaveTimer(boolean waveTimer) {
+        this.waveTimer = waveTimer;
+        return waveTimer;
+    }
+
+    public boolean setWaves(boolean waves) {
+        this.waves = waves;
+        return waves;
+    }
+
+    public boolean setPvp(boolean pvp) {
+        this.pvp = pvp;
+        return pvp;
+    }
+
+    public boolean setWaitEnemies(boolean waitEnemies) {
+        this.waitEnemies = waitEnemies;
+        return waitEnemies;
+    }
+
+    public boolean setAttackMode(boolean attackMode) {
+        this.attackMode = attackMode;
+        return attackMode;
+    }
+
+    public boolean setEditor(boolean editor) {
+        this.editor = editor;
+        return editor;
+    }
+
+    public boolean setCanGameOver(boolean canGameOver) {
+        this.canGameOver = canGameOver;
+        return canGameOver;
+    }
+
+    public boolean setCoreCapture(boolean coreCapture) {
+        this.coreCapture = coreCapture;
+        return coreCapture;
+    }
+
+    public boolean setReactorExplosions(boolean reactorExplosions) {
+        this.reactorExplosions = reactorExplosions;
+        return reactorExplosions;
+    }
+
+    public boolean setSchematicsAllowed(boolean schematicsAllowed) {
+        this.schematicsAllowed = schematicsAllowed;
+        return schematicsAllowed;
+    }
+
+    public boolean setDamageExplosions(boolean damageExplosions) {
+        this.damageExplosions = damageExplosions;
+        return damageExplosions;
+    }
+
+    public boolean setFire(boolean fire) {
+        this.fire = fire;
+        return fire;
+    }
+
+    public boolean setUnitAmmo(boolean unitAmmo) {
+        this.unitAmmo = unitAmmo;
+        return unitAmmo;
+    }
+
+    public boolean setUnitCapVariable(boolean unitCapVariable) {
+        this.unitCapVariable = unitCapVariable;
+        return unitCapVariable;
+    }
+
+    public float setUnitBuildSpeedMultiplier(float unitBuildSpeedMultiplier) {
+        this.unitBuildSpeedMultiplier = unitBuildSpeedMultiplier;
+        return unitBuildSpeedMultiplier;
+    }
+
+    public float setUnitDamageMultiplier(float unitDamageMultiplier) {
+        this.unitDamageMultiplier = unitDamageMultiplier;
+        return unitDamageMultiplier;
+    }
+
+    public boolean setLogicUnitBuild(boolean logicUnitBuild) {
+        this.logicUnitBuild = logicUnitBuild;
+        return logicUnitBuild;
+    }
+
+    public float setBlockHealthMultiplier(float blockHealthMultiplier) {
+        this.blockHealthMultiplier = blockHealthMultiplier;
+        return blockHealthMultiplier;
+    }
+
+    public float setBlockDamageMultiplier(float blockDamageMultiplier) {
+        this.blockDamageMultiplier = blockDamageMultiplier;
+        return blockDamageMultiplier;
+    }
+
+    public float setBuildCostMultiplier(float buildCostMultiplier) {
+        this.buildCostMultiplier = buildCostMultiplier;
+        return buildCostMultiplier;
+    }
+
+    public float setBuildSpeedMultiplier(float buildSpeedMultiplier) {
+        this.buildSpeedMultiplier = buildSpeedMultiplier;
+        return buildSpeedMultiplier;
+    }
+
+    public float setDeconstructRefundMultiplier(float deconstructRefundMultiplier) {
+        this.deconstructRefundMultiplier = deconstructRefundMultiplier;
+        return deconstructRefundMultiplier;
+    }
+
+    public float setEnemyCoreBuildRadius(float enemyCoreBuildRadius) {
+        this.enemyCoreBuildRadius = enemyCoreBuildRadius;
+        return enemyCoreBuildRadius;
+    }
+
+    public boolean setPolygonCoreProtection(boolean polygonCoreProtection) {
+        this.polygonCoreProtection = polygonCoreProtection;
+        return polygonCoreProtection;
+    }
+
+    public boolean setCleanupDeadTeams(boolean cleanupDeadTeams) {
+        this.cleanupDeadTeams = cleanupDeadTeams;
+        return cleanupDeadTeams;
+    }
+
+    public float setDropZoneRadius(float dropZoneRadius) {
+        this.dropZoneRadius = dropZoneRadius;
+        return dropZoneRadius;
+    }
+
+    public float setWaveSpacing(float waveSpacing) {
+        this.waveSpacing = waveSpacing;
+        return waveSpacing;
+    }
+
+    public int setWinWave(int winWave) {
+        this.winWave = winWave;
+        return winWave;
+    }
+
+    public int setUnitCap(int unitCap) {
+        this.unitCap = unitCap;
+        return unitCap;
+    }
+
+    public int setEnvironment(int environment) {
+        this.environment = environment;
+        return environment;
+    }
+
+    public Attributes setAttributes(Attributes attributes) {
+        this.attributes = attributes;
+        return attributes;
+    }
+
+    public Sector setSector(Sector sector) {
+        this.sector = sector;
+        return sector;
+    }
+
+    public Seq<SpawnGroup> setSpawns(Seq<SpawnGroup> spawns) {
+        this.spawns = spawns;
+        return spawns;
+    }
+
+    public Seq<ItemStack> setLoadout(Seq<ItemStack> loadout) {
+        this.loadout = loadout;
+        return loadout;
+    }
+
+    public Seq<WeatherEntry> setWeather(Seq<WeatherEntry> weather) {
+        this.weather = weather;
+        return weather;
+    }
+
+    public ObjectSet<Block> setBannedBlocks(ObjectSet<Block> bannedBlocks) {
+        this.bannedBlocks = bannedBlocks;
+        return bannedBlocks;
+    }
+
+    public ObjectSet<UnitType> setBannedUnits(ObjectSet<UnitType> bannedUnits) {
+        this.bannedUnits = bannedUnits;
+        return bannedUnits;
+    }
+
+    public ObjectSet<Block> setRevealedBlocks(ObjectSet<Block> revealedBlocks) {
+        this.revealedBlocks = revealedBlocks;
+        return revealedBlocks;
+    }
+
+    public ObjectSet<String> setResearched(ObjectSet<String> researched) {
+        this.researched = researched;
+        return researched;
+    }
+
+    public ObjectSet<Item> setHiddenBuildItems(ObjectSet<Item> hiddenBuildItems) {
+        this.hiddenBuildItems = hiddenBuildItems;
+        return hiddenBuildItems;
+    }
+
+    public boolean setLighting(boolean lighting) {
+        this.lighting = lighting;
+        return lighting;
+    }
+
+    public boolean setEnemyLights(boolean enemyLights) {
+        this.enemyLights = enemyLights;
+        return enemyLights;
+    }
+
+    public Color setAmbientLight(Color ambientLight) {
+        this.ambientLight = ambientLight;
+        return ambientLight;
+    }
+
+    public Team setDefaultTeam(Team defaultTeam) {
+        this.defaultTeam = defaultTeam;
+        return defaultTeam;
+    }
+
+    public Team setWaveTeam(Team waveTeam) {
+        this.waveTeam = waveTeam;
+        return waveTeam;
+    }
+
+    public Color setCloudColor(Color cloudColor) {
+        this.cloudColor = cloudColor;
+        return cloudColor;
+    }
+
+    public String setModeName(String modeName) {
+        this.modeName = modeName;
+        return modeName;
+    }
+
+    public boolean setCoreIncinerates(boolean coreIncinerates) {
+        this.coreIncinerates = coreIncinerates;
+        return coreIncinerates;
+    }
+
+    public boolean setBorderDarkness(boolean borderDarkness) {
+        this.borderDarkness = borderDarkness;
+        return borderDarkness;
+    }
+
+    public StringMap setTags(StringMap tags) {
+        this.tags = tags;
+        return tags;
+    }
+
+    public String setCustomBackgroundCallback(String customBackgroundCallback) {
+        this.customBackgroundCallback = customBackgroundCallback;
+        return customBackgroundCallback;
+    }
+
+    public String setBackgroundTexture(String backgroundTexture) {
+        this.backgroundTexture = backgroundTexture;
+        return backgroundTexture;
+    }
+
+    public float setBackgroundSpeed(float backgroundSpeed) {
+        this.backgroundSpeed = backgroundSpeed;
+        return backgroundSpeed;
+    }
+
+    public float setBackgroundScl(float backgroundScl) {
+        this.backgroundScl = backgroundScl;
+        return backgroundScl;
+    }
+
+    public float setBackgroundOffsetX(float backgroundOffsetX) {
+        this.backgroundOffsetX = backgroundOffsetX;
+        return backgroundOffsetX;
+    }
+
+    public float setBackgroundOffsetY(float backgroundOffsetY) {
+        this.backgroundOffsetY = backgroundOffsetY;
+        return backgroundOffsetY;
+    }
+
+    public PlanetParams setPlanetBackground(PlanetParams planetBackground) {
+        this.planetBackground = planetBackground;
+        return planetBackground;
+    }
+
     /** A team-specific ruleset. */
     public static class TeamRule{
         /** Whether to use building AI. */

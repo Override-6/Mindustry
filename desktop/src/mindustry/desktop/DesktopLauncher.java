@@ -34,11 +34,11 @@ public class DesktopLauncher extends ClientLauncher{
     Throwable steamError;
 
     public static void main(String[] arg){
+        clientApp = ClientAppLauncher.launchApp();
         try{
             Vars.loadLogger();
             new SdlApplication(new DesktopLauncher(arg), new SdlConfig(){{
                 title = "Mindustry";
-                maximized = true;
                 width = 900;
                 height = 700;
                 //enable gl3 with command-line argument

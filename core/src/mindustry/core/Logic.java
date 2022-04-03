@@ -59,7 +59,7 @@ public class Logic implements ApplicationListener{
         //when loading a 'damaged' sector, propagate the damage
         Events.on(SaveLoadEvent.class, e -> {
             if(state.isCampaign()){
-                state.rules.coreIncinerates = true;
+                state.rules.setCoreIncinerates(true);
 
                 SectorInfo info = state.rules.sector.info;
                 info.write();
@@ -79,8 +79,8 @@ public class Logic implements ApplicationListener{
                 //simulate passing of waves
                 if(wavesPassed > 0){
                     //simulate wave counter moving forward
-                    state.wave += wavesPassed;
-                    state.wavetime = state.rules.waveSpacing;
+                    state.setWave(state.wave + wavesPassed);
+                    state.setWavetime(state.rules.waveSpacing);
 
                     SectorDamage.applyCalculatedDamage();
                 }
@@ -104,7 +104,7 @@ public class Logic implements ApplicationListener{
                 if(!(state.getSector().preset != null && !state.getSector().preset.useAI)){
                     state.rules.waveTeam.rules().ai = true;
                 }
-                state.rules.coreIncinerates = true;
+                state.rules.setCoreIncinerates(true);
                 state.rules.waveTeam.rules().aiTier = state.getSector().threat * 0.8f;
                 state.rules.waveTeam.rules().infiniteResources = true;
 
@@ -157,7 +157,7 @@ public class Logic implements ApplicationListener{
     public void play(){
         state.set(State.playing);
         //grace period of 2x wave time before game starts
-        state.wavetime = state.rules.waveSpacing * 2;
+        state.setWavetime(state.rules.waveSpacing * 2);
         Events.fire(new PlayEvent());
 
         //add starting items
@@ -203,8 +203,8 @@ public class Logic implements ApplicationListener{
 
     public void runWave(){
         spawner.spawnEnemies();
-        state.wave++;
-        state.wavetime = state.rules.waveSpacing;
+        state.setWave(state.wave + 1);
+        state.setWavetime(state.rules.waveSpacing);
 
         Events.fire(new WaveEvent());
     }
@@ -214,14 +214,14 @@ public class Logic implements ApplicationListener{
         if(state.isCampaign()){
             //gameover only when cores are dead
             if(state.teams.playerCores().size == 0 && !state.gameOver){
-                state.gameOver = true;
+                state.setGameOver(true);
                 Events.fire(new GameOverEvent(state.rules.waveTeam));
             }
 
             //check if there are no enemy spawns
             if(state.rules.waves && spawner.countSpawns() + state.teams.cores(state.rules.waveTeam).size <= 0){
                 //if yes, waves get disabled
-                state.rules.waves = false;
+                state.rules.setWaves(false);
             }
 
             //if there's a "win" wave and no enemies are present, win automatically
@@ -232,7 +232,7 @@ public class Logic implements ApplicationListener{
             }
         }else{
             if(!state.rules.attackMode && state.teams.playerCores().size == 0 && !state.gameOver){
-                state.gameOver = true;
+                state.setGameOver(true);
                 Events.fire(new GameOverEvent(state.rules.waveTeam));
             }else if(state.rules.attackMode){
                 //count # of teams alive
@@ -242,7 +242,7 @@ public class Logic implements ApplicationListener{
                     //find team that won
                     TeamData left = state.teams.getActive().find(t -> t.hasCore() && t.team != Team.derelict);
                     Events.fire(new GameOverEvent(left == null ? Team.derelict : left.team));
-                    state.gameOver = true;
+                    state.setGameOver(true);
                 }
             }
         }
@@ -268,11 +268,11 @@ public class Logic implements ApplicationListener{
     @Remote(called = Loc.server)
     public static void sectorCapture(){
         //the sector has been conquered - waves get disabled
-        state.rules.waves = false;
+        state.rules.setWaves(false);
 
         if(state.rules.sector == null){
             //disable attack mode
-            state.rules.attackMode = false;
+            state.rules.setAttackMode(false);
             return;
         }
 
@@ -282,7 +282,7 @@ public class Logic implements ApplicationListener{
         Events.fire(new SectorCaptureEvent(state.rules.sector));
 
         //disable attack mode
-        state.rules.attackMode = false;
+        state.rules.setAttackMode(false);
 
         //save, just in case
         if(!headless && !net.client()){
@@ -292,7 +292,7 @@ public class Logic implements ApplicationListener{
 
     @Remote(called = Loc.both)
     public static void updateGameOver(Team winner){
-        state.gameOver = true;
+        state.setGameOver(true);
     }
 
     @Remote(called = Loc.both)
@@ -366,12 +366,12 @@ public class Logic implements ApplicationListener{
 
         if(state.isGame()){
             if(!net.client()){
-                state.enemies = Groups.unit.count(u -> u.team() == state.rules.waveTeam && u.isCounted());
+                state.setEnemies(Groups.unit.count(u -> u.team() == state.rules.waveTeam && u.isCounted()));
             }
 
             if(!state.isPaused()){
                 float delta = Core.graphics.getDeltaTime();
-                state.tick += Float.isNaN(delta) || Float.isInfinite(delta) ? 0f : delta * 60f;
+                state.setTick(state.tick + (Float.isNaN(delta) || Float.isInfinite(delta) ? 0f : delta * 60f));
 
                 state.teams.updateTeamStats();
 
@@ -397,7 +397,7 @@ public class Logic implements ApplicationListener{
 
                 if(state.rules.waves && state.rules.waveTimer && !state.gameOver){
                     if(!isWaitingWave()){
-                        state.wavetime = Math.max(state.wavetime - Time.delta, 0);
+                        state.setWavetime(Math.max(state.wavetime - Time.delta, 0));
                     }
                 }
 

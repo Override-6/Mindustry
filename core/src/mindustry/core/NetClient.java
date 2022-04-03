@@ -324,7 +324,7 @@ public class NetClient implements ApplicationListener{
 
     @Remote(variants = Variant.both)
     public static void setRules(Rules rules){
-        state.rules = rules;
+        state.setRules(rules);
     }
 
     @Remote(variants = Variant.both)
@@ -434,16 +434,16 @@ public class NetClient implements ApplicationListener{
     public static void stateSnapshot(float waveTime, int wave, int enemies, boolean paused, boolean gameOver, int timeData, byte tps, long rand0, long rand1, byte[] coreData){
         try{
             if(wave > state.wave){
-                state.wave = wave;
+                state.setWave(wave);
                 Events.fire(new WaveEvent());
             }
 
-            state.gameOver = gameOver;
-            state.wavetime = waveTime;
-            state.wave = wave;
-            state.enemies = enemies;
-            state.serverPaused = paused;
-            state.serverTps = tps & 0xff;
+            state.setGameOver(gameOver);
+            state.setWavetime(waveTime);
+            state.setWave(wave);
+            state.setEnemies(enemies);
+            state.setServerPaused(paused);
+            state.setServerTps(tps & 0xff);
 
             //note that this is far from a guarantee that random state is synced - tiny changes in delta and ping can throw everything off again.
             //syncing will only make much of a difference when rand() is called infrequently

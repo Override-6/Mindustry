@@ -193,8 +193,8 @@ public class ApplicationTests{
         ByteBuffer buffer = ByteBuffer.allocate(500);
 
         Rules rules = new Rules();
-        rules.attackMode = true;
-        rules.buildSpeedMultiplier = 99f;
+        rules.setAttackMode(true);
+        rules.setBuildSpeedMultiplier(99f);
 
         TypeIO.writeRules(new Writes(new ByteBufferOutput(buffer)), rules);
         buffer.position(0);
@@ -207,9 +207,9 @@ public class ApplicationTests{
     @Test
     void writeRules2(){
         Rules rules = new Rules();
-        rules.attackMode = true;
+        rules.setAttackMode(true);
         rules.tags.put("blah", "bleh");
-        rules.buildSpeedMultiplier = 99.1f;
+        rules.setBuildSpeedMultiplier(99.1f);
 
         String str = JsonIO.write(rules);
         Rules res = JsonIO.read(Rules.class, str);
@@ -219,7 +219,7 @@ public class ApplicationTests{
         assertEquals(rules.tags.get("blah"), res.tags.get("blah"));
 
         String str2 = JsonIO.write(new Rules(){{
-            attackMode = true;
+            setAttackMode(true);
         }});
         Log.info(str2);
     }
@@ -693,9 +693,9 @@ public class ApplicationTests{
         Unit d2 = UnitTypes.poly.create(Team.sharded);
 
         //infinite build range
-        state.rules.editor = true;
-        state.rules.infiniteResources = true;
-        state.rules.buildSpeedMultiplier = 999999f;
+        state.rules.setEditor(true);
+        state.rules.setInfiniteResources(true);
+        state.rules.setBuildSpeedMultiplier(999999f);
 
         d1.set(0f, 0f);
         d2.set(20f, 20f);
@@ -735,7 +735,7 @@ public class ApplicationTests{
         Time.setDeltaProvider(() -> 9999f);
 
         //prevents range issues
-        state.rules.infiniteResources = true;
+        state.rules.setInfiniteResources(true);
 
         d1.update();
 

@@ -8,6 +8,8 @@ import arc.scene.ui.layout.*;
 import arc.struct.*;
 import arc.util.*;
 import arc.util.Log.*;
+import fr.linkit.client.ClientApplication;
+import fr.linkit.server.ServerApplication;
 import mindustry.ai.*;
 import mindustry.async.*;
 import mindustry.core.*;
@@ -241,6 +243,9 @@ public class Vars implements Loadable{
     public static NetClient netClient;
 
     public static Player player;
+
+    public static ClientApplication clientApp;
+    public static ServerApplication serverApp;
 
     @Override
     public void loadAsync(){

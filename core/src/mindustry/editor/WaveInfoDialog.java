@@ -42,7 +42,7 @@ public class WaveInfoDialog extends BaseDialog{
         super("@waves.title");
 
         shown(this::setup);
-        hidden(() -> state.rules.spawns = groups);
+        hidden(() -> state.rules.setSpawns(groups));
 
         addCloseListener();
 

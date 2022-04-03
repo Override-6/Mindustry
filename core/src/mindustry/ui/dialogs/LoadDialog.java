@@ -211,8 +211,8 @@ public class LoadDialog extends BaseDialog{
                 try{
                     net.reset();
                     slot.load();
-                    state.rules.editor = false;
-                    state.rules.sector = null;
+                    state.rules.setEditor(false);
+                    state.rules.setSector(null);
                     state.set(State.playing);
                 }catch(SaveException e){
                     Log.err(e);

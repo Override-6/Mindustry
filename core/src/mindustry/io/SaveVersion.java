@@ -109,12 +109,12 @@ public abstract class SaveVersion extends SaveFileReader{
     public void readMeta(DataInput stream) throws IOException{
         StringMap map = readStringMap(stream);
 
-        state.wave = map.getInt("wave");
-        state.wavetime = map.getFloat("wavetime", state.rules.waveSpacing);
-        state.tick = map.getFloat("tick");
-        state.stats = JsonIO.read(GameStats.class, map.get("stats", "{}"));
-        state.rules = JsonIO.read(Rules.class, map.get("rules", "{}"));
-        if(state.rules.spawns.isEmpty()) state.rules.spawns = waves.get();
+        state.setWave(map.getInt("wave"));
+        state.setWavetime(map.getFloat("wavetime", state.rules.waveSpacing));
+        state.setTick(map.getFloat("tick"));
+        state.setStats(JsonIO.read(GameStats.class, map.get("stats", "{}")));
+        state.setRules(JsonIO.read(Rules.class, map.get("rules", "{}")));
+        if(state.rules.spawns.isEmpty()) state.rules.setSpawns(waves.get());
         lastReadBuild = map.getInt("build", -1);
 
         if(!headless){
@@ -130,11 +130,11 @@ public abstract class SaveVersion extends SaveFileReader{
         }
 
         Map worldmap = maps.byName(map.get("mapname", "\\\\\\"));
-        state.map = worldmap == null ? new Map(StringMap.of(
+        state.setMap(worldmap == null ? new Map(StringMap.of(
             "name", map.get("mapname", "Unknown"),
             "width", 1,
             "height", 1
-        )) : worldmap;
+        )) : worldmap);
     }
 
     public void writeMap(DataOutput stream) throws IOException{

@@ -60,12 +60,12 @@ public class NetworkIO{
 
         try(DataInputStream stream = new DataInputStream(is)){
             Time.clear();
-            state.rules = JsonIO.read(Rules.class, stream.readUTF());
-            state.map = new Map(SaveIO.getSaveWriter().readStringMap(stream));
+            state.setRules(JsonIO.read(Rules.class, stream.readUTF()));
+            state.setMap(new Map(SaveIO.getSaveWriter().readStringMap(stream)));
 
-            state.wave = stream.readInt();
-            state.wavetime = stream.readFloat();
-            state.tick = stream.readDouble();
+            state.setWave(stream.readInt());
+            state.setWavetime(stream.readFloat());
+            state.setTick(stream.readDouble());
             GlobalConstants.rand.seed0 = stream.readLong();
             GlobalConstants.rand.seed1 = stream.readLong();
 

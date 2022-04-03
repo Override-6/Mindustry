@@ -138,7 +138,7 @@ public class Maps{
         for(Fi file : platform.getWorkshopContent(Map.class)){
             try{
                 Map map = loadMap(file, false);
-                map.workshop = true;
+                map.setWorkshop(true);
                 map.tags.put("steamid", file.parent().name());
             }catch(Exception e){
                 Log.err("Failed to load workshop map file '@'!", file);
@@ -150,7 +150,7 @@ public class Maps{
         mods.listFiles("maps", (mod, file) -> {
             try{
                 Map map = loadMap(file, false);
-                map.mod = mod;
+                map.setMod(mod);
             }catch(Exception e){
                 Log.err("Failed to load mod map file '@'!", file);
                 Log.err(e);
@@ -162,7 +162,7 @@ public class Maps{
         for(Map map : maps){
             if(map.texture != null){
                 map.texture.dispose();
-                map.texture = null;
+                map.setTexture(null);
             }
         }
         maps.clear();
@@ -188,7 +188,7 @@ public class Maps{
                 //dispose of map if it's already there
                 if(other.texture != null){
                     other.texture.dispose();
-                    other.texture = null;
+                    other.setTexture(null);
                 }
                 maps.remove(other);
                 file = other.file;
@@ -203,7 +203,7 @@ public class Maps{
             if(!headless){
                 //reset attributes
                 map.teams.clear();
-                map.spawns = 0;
+                map.setSpawns(0);
 
                 for(int x = 0; x < map.width; x++){
                     for(int y = 0; y < map.height; y++){
@@ -214,7 +214,7 @@ public class Maps{
                         }
 
                         if(tile.overlay() == Blocks.spawn){
-                            map.spawns ++;
+                            map.setSpawns(map.spawns + 1);
                         }
                     }
                 }
@@ -227,7 +227,7 @@ public class Maps{
                 executor.submit(() -> map.previewFile().writePng(pix));
                 writeCache(map);
 
-                map.texture = new Texture(pix);
+                map.setTexture(new Texture(pix));
             }
             maps.add(map);
             maps.sort();
@@ -284,7 +284,7 @@ public class Maps{
     public void removeMap(Map map){
         if(map.texture != null){
             map.texture.dispose();
-            map.texture = null;
+            map.setTexture(null);
         }
 
         maps.remove(map);
@@ -381,7 +381,7 @@ public class Maps{
             //try to load preview
             if(map.previewFile().exists()){
                 //this may fail, but calls queueNewPreview
-                Core.assets.load(new AssetDescriptor<>(map.previewFile().path() + "." + mapExtension, Texture.class, new MapPreviewParameter(map))).loaded = t -> map.texture = t;
+                Core.assets.load(new AssetDescriptor<>(map.previewFile().path() + "." + mapExtension, Texture.class, new MapPreviewParameter(map))).loaded = t -> map.setTexture(t);
 
                 try{
                     readCache(map);
@@ -398,7 +398,7 @@ public class Maps{
     private void createAllPreviews(){
         Core.app.post(() -> {
             for(Map map : previewList){
-                createNewPreview(map, e -> Core.app.post(() -> map.texture = Core.assets.get("sprites/error.png")));
+                createNewPreview(map, e -> Core.app.post(() -> map.setTexture(Core.assets.get("sprites/error.png"))));
             }
             previewList.clear();
         });
@@ -413,7 +413,7 @@ public class Maps{
             //if it's here, then the preview failed to load or doesn't exist, make it
             //this has to be done synchronously!
             Pixmap pix = MapIO.generatePreview(map);
-            map.texture = new Texture(pix);
+            map.setTexture(new Texture(pix));
             executor.submit(() -> {
                 try{
                     map.previewFile().writePng(pix);
@@ -445,7 +445,7 @@ public class Maps{
     private void readCache(Map map) throws IOException{
         try(DataInputStream stream = new DataInputStream(map.cacheFile().read(Streams.defaultBufferSize))){
             stream.read(); //version
-            map.spawns = stream.readInt();
+            map.setSpawns(stream.readInt());
             int teamsize = stream.readByte();
             for(int i = 0; i < teamsize; i++){
                 map.teams.add(stream.read());

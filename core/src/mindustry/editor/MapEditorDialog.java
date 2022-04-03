@@ -211,7 +211,7 @@ public class MapEditorDialog extends Dialog implements Disposable{
             if(!shownWithMap){
                 //clear units, rules and other unnecessary stuff
                 logic.reset();
-                state.rules = new Rules();
+                state.setRules(new Rules());
                 editor.beginEdit(200, 200);
             }
             shownWithMap = false;
@@ -232,7 +232,7 @@ public class MapEditorDialog extends Dialog implements Disposable{
         state.set(State.menu);
         shownWithMap = true;
         show();
-        state.rules = (lastSavedRules == null ? new Rules() : lastSavedRules);
+        state.setRules((lastSavedRules == null ? new Rules() : lastSavedRules));
         lastSavedRules = null;
         saved = false;
         editor.renderer.updateAll();
@@ -244,15 +244,15 @@ public class MapEditorDialog extends Dialog implements Disposable{
             lastSavedRules = state.rules;
             hide();
             //only reset the player; logic.reset() will clear entities, which we do not want
-            state.teams = new Teams();
+            state.setTeams(new Teams());
             player.reset();
-            state.rules = Gamemode.editor.apply(lastSavedRules.copy());
-            state.rules.sector = null;
-            state.map = new Map(StringMap.of(
+            state.setRules(Gamemode.editor.apply(lastSavedRules.copy()));
+            state.rules.setSector(null);
+            state.setMap(new Map(StringMap.of(
                 "name", "Editor Playtesting",
                 "width", editor.width(),
                 "height", editor.height()
-            ));
+            )));
             world.endMapLoad();
             player.set(world.width() * tilesize/2f, world.height() * tilesize/2f);
             player.clearUnit();
@@ -272,7 +272,7 @@ public class MapEditorDialog extends Dialog implements Disposable{
 
     public @Nullable Map save(){
         boolean isEditor = state.rules.editor;
-        state.rules.editor = false;
+        state.rules.setEditor(false);
         String name = editor.tags.get("name", "").trim();
         editor.tags.put("rules", JsonIO.write(state.rules));
         editor.tags.remove("width");
@@ -297,7 +297,7 @@ public class MapEditorDialog extends Dialog implements Disposable{
 
         menu.hide();
         saved = true;
-        state.rules.editor = isEditor;
+        state.rules.setEditor(isEditor);
         return returned;
     }
 

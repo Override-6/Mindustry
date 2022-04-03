@@ -60,7 +60,7 @@ public class MapInfoDialog extends BaseDialog{
             t.row();
             t.add("@editor.rules").padRight(8).left();
             t.button("@edit", () -> {
-                ruleInfo.show(Vars.state.rules, () -> Vars.state.rules = new Rules());
+                ruleInfo.show(Vars.state.rules, () -> Vars.state.setRules(new Rules()));
                 hide();
             }).left().width(200f);
 

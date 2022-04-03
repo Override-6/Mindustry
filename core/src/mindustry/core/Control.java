@@ -298,9 +298,9 @@ public class Control implements ApplicationListener, Loadable{
         ui.loadAnd(() -> {
             logic.reset();
             world.loadMap(map, rules);
-            state.rules = rules;
-            state.rules.sector = null;
-            state.rules.editor = false;
+            state.setRules(rules);
+            state.rules.setSector(null);
+            state.rules.setEditor(false);
             logic.play();
             if(settings.getBool("savecreate") && !world.isInvalidMap()){
                 control.saves.addSave(map.name() + " " + new SimpleDateFormat("MMM dd h:mm", Locale.getDefault()).format(new Date()));
@@ -334,8 +334,8 @@ public class Control implements ApplicationListener, Loadable{
                     reloader.begin();
                     slot.load();
                     slot.setAutosave(true);
-                    state.rules.sector = sector;
-                    state.rules.cloudColor = sector.planet.landCloudColor;
+                    state.rules.setSector(sector);
+                    state.rules.setCloudColor(sector.planet.landCloudColor);
 
                     //if there is no base, simulate a new game and place the right loadout at the spawn position
                     if(state.rules.defaultTeam.cores().isEmpty() || hadNoCore){
@@ -358,16 +358,16 @@ public class Control implements ApplicationListener, Loadable{
                         SectorDamage.apply(1f);
 
                         //reset wave so things are more fair
-                        state.wave = 1;
+                        state.setWave(1);
                         //set up default wave time
-                        state.wavetime = state.rules.waveSpacing * (sector.preset == null ? 2f : sector.preset.startWaveTimeMultiplier);
+                        state.setWavetime(state.rules.waveSpacing * (sector.preset == null ? 2f : sector.preset.startWaveTimeMultiplier));
                         //reset captured state
                         sector.info.wasCaptured = false;
                         //re-enable waves
-                        state.rules.waves = true;
+                        state.rules.setWaves(true);
 
                         //reset win wave??
-                        state.rules.winWave = state.rules.attackMode ? -1 : sector.preset != null && sector.preset.captureWave > 0 ? sector.preset.captureWave : state.rules.winWave > state.wave ? state.rules.winWave : 30;
+                        state.rules.setWinWave(state.rules.attackMode ? -1 : sector.preset != null && sector.preset.captureWave > 0 ? sector.preset.captureWave : state.rules.winWave > state.wave ? state.rules.winWave : 30);
 
                         //if there's still an enemy base left, fix it
                         if(state.rules.attackMode){
@@ -415,7 +415,7 @@ public class Control implements ApplicationListener, Loadable{
             }else{
                 reloader.begin();
                 world.loadSector(sector);
-                state.rules.sector = sector;
+                state.rules.setSector(sector);
                 //assign origin when launching
                 sector.info.origin = origin;
                 sector.info.destination = origin;

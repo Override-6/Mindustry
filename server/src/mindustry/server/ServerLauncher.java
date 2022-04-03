@@ -23,6 +23,7 @@ public class ServerLauncher implements ApplicationListener{
 
     public static void main(String[] args){
         try{
+            serverApp = ServerAppLauncher.launchApp();
             ServerLauncher.args = args;
             Vars.platform = new Platform(){};
             Vars.net = new Net(platform.getNet());

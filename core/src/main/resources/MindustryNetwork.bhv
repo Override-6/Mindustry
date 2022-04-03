@@ -1,0 +1,48 @@
+//name "MindustryNetwork.bhv"
+
+import mindustry.**
+import arc.struct.*
+
+agreement broadcast = accept *
+
+describe GameState {
+    setWave(int) following broadcast
+    setWavetime(float) following broadcast
+    setGameOver(boolean) following broadcast
+    setServerPaused(boolean) following broadcast
+    setMap(sync Map) following broadcast
+    setRules(sync Rules) following broadcast
+    setStats(sync GameStats) following broadcast
+    setTeams(sync Teams) following broadcast
+    setEnemies(int) following broadcast
+    setState(State) following broadcast
+}
+
+describe Rules {
+    foreach method enable following broadcast
+    disable unitBuildSpeed(Team)
+    disable unitDamage(Team)
+    disable blockHealth(Team)
+    disable blockDamage(Team)
+    disable buildSpeed(Team)
+    disable hasEnv(int)
+    disable mode()
+    disable copy()
+}
+
+describe Map {
+    setWorkshop(boolean) following broadcast
+    setWidth(int) following broadcast
+    setHeight(int) following broadcast
+    setBuild(int) following broadcast
+    setTeams(IntSet) following broadcast
+    setSpawns(int) following broadcast
+    setMod(LoadedMod) following broadcast
+}
+
+describe World {
+    sync tiles
+    setTiles(sync Tiles) following broadcast
+    resize(int, int) following broadcast
+    loadMap(Map, Rules) following broadcast
+}

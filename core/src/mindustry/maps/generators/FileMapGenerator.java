@@ -79,6 +79,6 @@ public class FileMapGenerator implements WorldGenerator{
             throw new IllegalArgumentException("All maps must have a core.");
         }
 
-        state.map = map;
+        state.setMap(map);
     }
 }

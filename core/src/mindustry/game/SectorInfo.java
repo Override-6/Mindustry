@@ -138,15 +138,15 @@ public class SectorInfo{
             winWave = 30;
         }
 
-        state.wave = wave;
-        state.rules.waves = waves;
-        state.rules.waveSpacing = waveSpacing;
-        state.rules.winWave = winWave;
-        state.rules.attackMode = attack;
+        state.setWave(wave);
+        state.rules.setWaves(waves);
+        state.rules.setWaveSpacing(waveSpacing);
+        state.rules.setWinWave(winWave);
+        state.rules.setAttackMode(attack);
 
         //assign new wave patterns when the version changes
         if(waveVersion != Waves.waveVersion && state.rules.sector.preset == null){
-            state.rules.spawns = Waves.generate(state.rules.sector.threat);
+            state.rules.setSpawns(Waves.generate(state.rules.sector.threat));
         }
 
         CoreBuild entity = state.rules.defaultTeam.core();

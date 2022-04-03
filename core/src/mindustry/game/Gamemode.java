@@ -8,35 +8,35 @@ import mindustry.maps.*;
 /** Defines preset rule sets. */
 public enum Gamemode{
     survival(rules -> {
-        rules.waveTimer = true;
-        rules.waves = true;
+        rules.setWaveTimer(true);
+        rules.setWaves(true);
     }, map -> map.spawns > 0),
     sandbox(rules -> {
-        rules.infiniteResources = true;
-        rules.waves = true;
-        rules.waveTimer = false;
+        rules.setInfiniteResources(true);
+        rules.setWaves(true);
+        rules.setWaveTimer(false);
     }),
     attack(rules -> {
-        rules.attackMode = true;
-        rules.waves = true;
-        rules.waveTimer = true;
+        rules.setAttackMode(true);
+        rules.setWaves(true);
+        rules.setWaveTimer(true);
 
-        rules.waveSpacing = 2f * Time.toMinutes;
+        rules.setWaveSpacing(2f * Time.toMinutes);
         rules.teams.get(rules.waveTeam).infiniteResources = true;
     }, map -> map.teams.size > 1),
     pvp(rules -> {
-        rules.pvp = true;
-        rules.enemyCoreBuildRadius = 600f;
-        rules.buildCostMultiplier = 1f;
-        rules.buildSpeedMultiplier = 1f;
-        rules.unitBuildSpeedMultiplier = 2f;
-        rules.attackMode = true;
+        rules.setPvp(true);
+        rules.setEnemyCoreBuildRadius(600f);
+        rules.setBuildCostMultiplier(1f);
+        rules.setBuildSpeedMultiplier(1f);
+        rules.setUnitBuildSpeedMultiplier(2f);
+        rules.setAttackMode(true);
     }, map -> map.teams.size > 1),
     editor(true, rules -> {
-        rules.infiniteResources = true;
-        rules.editor = true;
-        rules.waves = false;
-        rules.waveTimer = false;
+        rules.setInfiniteResources(true);
+        rules.setEditor(true);
+        rules.setWaves(false);
+        rules.setWaveTimer(false);
     });
 
     private final Cons<Rules> rules;

@@ -43,10 +43,10 @@ public class Map implements Comparable<Map>, Publishable{
         this.custom = custom;
         this.tags = tags;
         this.file = file;
-        this.width = width;
-        this.height = height;
+        this.setWidth(width);
+        this.setHeight(height);
         this.version = version;
-        this.build = build;
+        this.setBuild(build);
     }
 
     public Map(Fi file, int width, int height, StringMap tags, boolean custom, int version){
@@ -101,7 +101,7 @@ public class Map implements Comparable<Map>, Publishable{
             //this replacement is a MASSIVE hack but it fixes some incorrect overwriting of team-specific rules.
             //may need to be tweaked later
             Rules result = JsonIO.read(Rules.class, base, tags.get("rules", "{}").replace("teams:{2:{infiniteAmmo:true}},", ""));
-            if(result.spawns.isEmpty()) result.spawns = Vars.waves.get();
+            if(result.spawns.isEmpty()) result.setSpawns(Vars.waves.get());
             return result;
         }catch(Exception e){
             //error reading rules. ignore?
@@ -229,5 +229,45 @@ public class Map implements Comparable<Map>, Publishable{
         ", custom=" + custom +
         ", tags=" + tags +
         '}';
+    }
+
+    public boolean setWorkshop(boolean workshop) {
+        this.workshop = workshop;
+        return workshop;
+    }
+
+    public int setWidth(int width) {
+        this.width = width;
+        return width;
+    }
+
+    public int setHeight(int height) {
+        this.height = height;
+        return height;
+    }
+
+    public Texture setTexture(Texture texture) {
+        this.texture = texture;
+        return texture;
+    }
+
+    public int setBuild(int build) {
+        this.build = build;
+        return build;
+    }
+
+    public IntSet setTeams(IntSet teams) {
+        this.teams = teams;
+        return teams;
+    }
+
+    public int setSpawns(int spawns) {
+        this.spawns = spawns;
+        return spawns;
+    }
+
+    public LoadedMod setMod(LoadedMod mod) {
+        this.mod = mod;
+        return mod;
     }
 }
