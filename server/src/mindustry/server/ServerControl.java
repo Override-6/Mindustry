@@ -51,16 +51,15 @@ import mindustry.net.Administration.PlayerInfo;
 import mindustry.net.Packets.KickReason;
 import mindustry.net.WorldReloader;
 import mindustry.type.Item;
+import scala.Option;
+import scala.Some;
 import scala.reflect.ClassTag;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.BindException;
-import java.net.InetSocketAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -318,6 +317,10 @@ public class ServerControl implements ApplicationListener {
                 @Override
                 public String identifier() {
                     return "LinkitServer";
+                }
+
+                {
+                    defaultPersistenceConfigScript_$eq(Some.apply(Player.class.getResource("/mindustry.sc")));
                 }
             }.build());
             Network network = connection.network();

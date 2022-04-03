@@ -229,7 +229,7 @@ public class Teams{
         }
     }
 
-    public static class TeamData{
+    public static class TeamData {
         public final Seq<CoreBuild> cores = new Seq<>();
         public final Team team;
         public final BaseAI ai;

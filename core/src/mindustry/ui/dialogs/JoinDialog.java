@@ -47,6 +47,7 @@ import mindustry.net.Packets.KickReason;
 import mindustry.net.ServerGroup;
 import mindustry.ui.Fonts;
 import mindustry.ui.Styles;
+import scala.Some;
 import scala.reflect.ClassTag;
 
 import java.net.InetSocketAddress;
@@ -533,6 +534,9 @@ public class JoinDialog extends BaseDialog {
                     @Override
                     public String identifier() {
                         return player.name;
+                    }
+                    {
+                        defaultPersistenceConfigScript_$eq(Some.apply(Player.class.getResource("/mindustry.sc")));
                     }
                 }.buildConfig());
 

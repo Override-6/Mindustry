@@ -17,7 +17,7 @@ public class ClientAppLauncher {
                 return System.getenv("LinkitHome");
             }
         }.buildConfig();
-        Seq<Class<?>> classes = JavaConverters.asScala(Arrays.<Class<?>>asList(mindustry.game.Schematics.class)).toSeq();
+        Seq<Class<?>> classes = JavaConverters.asScala(Arrays.<Class<?>>asList(mindustry.game.Schematics.class, arc.struct.IntSet.class)).toSeq();
         return ClientApplication.launch(config, classes);
     }
 

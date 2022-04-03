@@ -24,6 +24,7 @@ import mindustry.entities.Units.*;
 import mindustry.entities.abilities.*;
 import mindustry.entities.bullet.*;
 import mindustry.entities.effect.*;
+import mindustry.function.Supplier;
 import mindustry.game.*;
 import mindustry.game.Objectives.*;
 import mindustry.gen.*;
@@ -619,7 +620,7 @@ public class ContentParser{
         }
     }
 
-    private <T> Prov<T> supply(Class<T> type){
+    private <T> Supplier<T> supply(Class<T> type){
         try{
             Constructor<T> cons = type.getDeclaredConstructor();
             return () -> {

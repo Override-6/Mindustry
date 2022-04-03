@@ -175,7 +175,7 @@ public class CoreBlock extends StorageBlock{
         }
     }
 
-    public class CoreBuild extends Building{
+    public class CoreBuild extends Building {
         public int storageCapacity;
         public boolean noEffect = false;
         public Team lastDamage = Team.derelict;
