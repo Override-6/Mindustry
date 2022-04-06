@@ -176,7 +176,7 @@ public class ItemBridge extends Block{
         Placement.calculateNodes(points, this, rotation, (point, other) -> Math.max(Math.abs(point.x - other.x), Math.abs(point.y - other.y)) <= range);
     }
 
-    public class ItemBridgeBuild extends Building{
+    public class ItemBridgeBuild extends Building {
         public int link = -1;
         public IntSeq incoming = new IntSeq(false, 4);
         public float warmup;

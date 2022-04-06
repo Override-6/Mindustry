@@ -14,6 +14,7 @@ import arc.scene.ui.layout.*;
 import arc.struct.*;
 import arc.util.*;
 import arc.util.io.*;
+import fr.linkit.api.gnom.persistence.context.Deconstructible;
 import mindustry.*;
 import mindustry.annotations.Annotations.*;
 import mindustry.audio.*;
@@ -44,7 +45,7 @@ import static mindustry.Vars.*;
 
 @EntityDef(value = {Buildingc.class}, isFinal = false, genio = false, serialize = false)
 @Component(base = true)
-abstract class BuildingComp implements Posc, Teamc, Healthc, Buildingc, Timerc, QuadTreeObject, Displayable, Senseable, Controllable, Sized{
+abstract class BuildingComp implements Posc, Teamc, Healthc, Buildingc, Timerc, QuadTreeObject, Displayable, Senseable, Controllable, Sized {
     //region vars and initialization
     static final float timeToSleep = 60f * 1, timeToUncontrol = 60f * 6;
     static final ObjectSet<Building> tmpTiles = new ObjectSet<>();
@@ -55,31 +56,31 @@ abstract class BuildingComp implements Posc, Teamc, Healthc, Buildingc, Timerc, 
     @Import float x, y, health, maxHealth;
     @Import Team team;
 
-    transient Tile tile;
-    transient Block block;
-    transient Seq<Building> proximity = new Seq<>(6);
-    transient boolean updateFlow;
-    transient byte cdump;
-    transient int rotation;
-    transient float payloadRotation;
-    transient boolean enabled = true;
-    transient float enabledControlTime;
-    transient String lastAccessed;
-    transient boolean wasDamaged; //used only by the indexer
+    Tile tile;
+    Block block;
+    Seq<Building> proximity = new Seq<>(6);
+    boolean updateFlow;
+    byte cdump;
+    int rotation;
+    float payloadRotation;
+    boolean enabled = true;
+    float enabledControlTime;
+    String lastAccessed;
+    boolean wasDamaged; //used only by the indexer
 
     PowerModule power;
     ItemModule items;
     LiquidModule liquids;
     ConsumeModule cons;
 
-    private transient float timeScale = 1f, timeScaleDuration;
-    private transient float dumpAccum;
+    private float timeScale = 1f, timeScaleDuration;
+    private float dumpAccum;
 
-    private transient @Nullable SoundLoop sound;
+    private @Nullable SoundLoop sound;
 
-    private transient boolean sleeping;
-    private transient float sleepTime;
-    private transient boolean initialized;
+    private boolean sleeping;
+    private float sleepTime;
+    private boolean initialized;
 
     /** Sets this tile entity data to this and adds it if necessary. */
     public Building init(Tile tile, Team team, boolean shouldAdd, int rotation){

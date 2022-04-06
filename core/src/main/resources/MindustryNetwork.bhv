@@ -14,7 +14,7 @@ describe GameState {
     setRules(sync Rules) following broadcast
     setStats(sync GameStats) following broadcast
     setTeams(sync Teams) following broadcast
-    setEnemies(int) following broadcast
+    //setEnemies(int) following broadcast
     setState(State) following broadcast
 }
 

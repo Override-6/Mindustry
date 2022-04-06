@@ -1,4 +1,4 @@
-import fr.linkit.engine.gnom.persistence.context.PersistenceConfigBuilder
+import fr.linkit.engine.gnom.persistence.config.PersistenceConfigBuilder
 import fr.linkit.engine.internal.utils.Identity
 import mindustry.Vars
 import mindustry.content.Blocks
