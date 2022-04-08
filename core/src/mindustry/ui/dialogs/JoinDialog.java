@@ -542,19 +542,17 @@ public class JoinDialog extends BaseDialog {
 
                 Network network = connection.network();
                 SharedCacheManager global = network.globalCache();
-                PropertyClass properties = ObjectsProperty.defaults(network);
-                ContractDescriptorData contracts = Contract.apply(Player.class.getResource("/MindustryNetwork.bhv"), clientApp, properties);
 
                 //sync GameState
                 {
                     ClassTag<DefaultSynchronizedObjectCache<GameState>> evidence = ClassTag.apply(DefaultSynchronizedObjectCache.class);
-                    DefaultSynchronizedObjectCache<GameState> stateCache = global.attachToCache(71, evidence, cast(DefaultSynchronizedObjectCache.apply(contracts, evidence)));
+                    DefaultSynchronizedObjectCache<GameState> stateCache = global.attachToCache(71, evidence, cast(DefaultSynchronizedObjectCache.apply(evidence)));
                     Vars.state = stateCache.findObject(0).get();
                 }
                 //sync World
                 {
                     ClassTag<DefaultSynchronizedObjectCache<World>> evidence = ClassTag.apply(DefaultSynchronizedObjectCache.class);
-                    DefaultSynchronizedObjectCache<World> worldCache = global.attachToCache(72, evidence, cast(DefaultSynchronizedObjectCache.apply(contracts, evidence)));
+                    DefaultSynchronizedObjectCache<World> worldCache = global.attachToCache(72, evidence, cast(DefaultSynchronizedObjectCache.apply(evidence)));
                     Vars.world = worldCache.findObject(0).get();
                 }
 

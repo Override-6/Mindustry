@@ -326,7 +326,7 @@ public class ServerControl implements ApplicationListener {
             Network network = connection.network();
             SharedCacheManager global = network.globalCache();
             PropertyClass properties = ObjectsProperty.defaults(network);
-            ContractDescriptorData contracts = Contract.apply(Player.class.getResource("/MindustryNetwork.bhv"), serverApp, properties);
+            ContractDescriptorData contracts = Contract.apply("MindustryNetwork", serverApp, properties);
 
             //sync GameState
             {
