@@ -20,14 +20,12 @@ import static arc.graphics.g2d.Lines.*;
 import static arc.math.Angles.*;
 import static mindustry.Vars.*;
 
-public class Fx{
+public class  Fx{
     private static final Rand rand = new Rand();
     private static final Vec2 v = new Vec2();
 
     public static final Effect
-
     none = new Effect(0, 0f, e -> {}),
-    
     blockCrash = new Effect(100f, e -> {
         if(!(e.data instanceof Block block)) return;
 

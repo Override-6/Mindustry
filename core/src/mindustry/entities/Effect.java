@@ -1,7 +1,7 @@
 package mindustry.entities;
 
 import arc.*;
-import arc.func.*;
+import arc.func.Cons;
 import arc.graphics.*;
 import arc.graphics.g2d.*;
 import arc.math.*;

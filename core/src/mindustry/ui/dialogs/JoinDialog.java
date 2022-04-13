@@ -17,24 +17,13 @@ import arc.util.serialization.Jval;
 import fr.linkit.api.application.connection.ConnectionInitialisationException;
 import fr.linkit.api.application.connection.ExternalConnection;
 import fr.linkit.api.gnom.cache.SharedCacheManager;
-import fr.linkit.api.gnom.cache.sync.contract.descriptor.ContractDescriptorData;
 import fr.linkit.api.gnom.network.Network;
 import fr.linkit.client.ClientApplication;
 import fr.linkit.client.config.ClientConnectionConfigBuilder;
 import fr.linkit.engine.gnom.cache.sync.DefaultSynchronizedObjectCache;
-import fr.linkit.engine.gnom.cache.sync.instantiation.ContentSwitcher;
-import fr.linkit.engine.gnom.packet.SimplePacketAttributes;
-import fr.linkit.engine.gnom.packet.fundamental.RefPacket;
-import fr.linkit.engine.gnom.packet.traffic.ChannelScopes;
-import fr.linkit.engine.gnom.packet.traffic.channel.SyncAsyncPacketChannel;
-import fr.linkit.engine.gnom.packet.traffic.channel.SyncAsyncPacketChannel$;
-import fr.linkit.engine.internal.language.bhv.Contract;
-import fr.linkit.engine.internal.language.bhv.ObjectsProperty;
-import fr.linkit.engine.internal.language.bhv.PropertyClass;
 import mindustry.Vars;
 import mindustry.core.GameState;
 import mindustry.core.Version;
-import mindustry.core.World;
 import mindustry.game.EventType.ClientPreConnectEvent;
 import mindustry.gen.Icon;
 import mindustry.gen.Iconc;
@@ -42,6 +31,7 @@ import mindustry.gen.Player;
 import mindustry.gen.Tex;
 import mindustry.graphics.Pal;
 import mindustry.io.legacy.LegacyIO;
+import mindustry.linkit.PlayerManager;
 import mindustry.net.Host;
 import mindustry.net.Packets.KickReason;
 import mindustry.net.ServerGroup;
@@ -535,6 +525,7 @@ public class JoinDialog extends BaseDialog {
                     public String identifier() {
                         return player.name;
                     }
+
                     {
                         defaultPersistenceConfigScript_$eq(Some.apply(Player.class.getResource("/mindustry.sc")));
                     }
@@ -549,13 +540,15 @@ public class JoinDialog extends BaseDialog {
                     DefaultSynchronizedObjectCache<GameState> stateCache = global.attachToCache(71, evidence, cast(DefaultSynchronizedObjectCache.apply(evidence)));
                     Vars.state = stateCache.findObject(0).get();
                 }
-                //sync World
+                control.playMap(state.map, state.rules);
+                //sync PlayerManager
                 {
-                    ClassTag<DefaultSynchronizedObjectCache<World>> evidence = ClassTag.apply(DefaultSynchronizedObjectCache.class);
-                    DefaultSynchronizedObjectCache<World> worldCache = global.attachToCache(72, evidence, cast(DefaultSynchronizedObjectCache.apply(evidence)));
-                    Vars.world = worldCache.findObject(0).get();
+                    ClassTag<DefaultSynchronizedObjectCache<PlayerManager>> evidence = ClassTag.apply(DefaultSynchronizedObjectCache.class);
+                    DefaultSynchronizedObjectCache<PlayerManager> worldCache = global.attachToCache(72, evidence, cast(DefaultSynchronizedObjectCache.apply(evidence)));
+                    PlayerManager manager = worldCache.findObject(0).get();
+                    manager.setCurrentPlayer(player);
+                    manager.addOtherPlayers();
                 }
-
                 Log.info("Connected to linkit connection " + ip + ":" + port + " as " + player.name);
             } catch (ConnectionInitialisationException e) {
                 e.printStackTrace();

@@ -1,9 +1,14 @@
-//name "MindustryNetwork.bhv"
+name "MindustryNetwork"
 
 import mindustry.**
 import arc.struct.*
+import arc.math.geom.*
 
 agreement broadcast = accept *
+
+describe PlayerManager {
+    setCurrentPlayer(sync Player)
+}
 
 describe GameState {
     setWave(int) following broadcast
@@ -15,7 +20,24 @@ describe GameState {
     setStats(sync GameStats) following broadcast
     setTeams(sync Teams) following broadcast
     //setEnemies(int) following broadcast
-    setState(State) following broadcast
+    //setState(State) following broadcast
+}
+
+describe Posc {
+    x(float) following broadcast
+    y(float) following broadcast
+    trns(Position) following broadcast
+    trns(float, float) following broadcast
+    set(Position) following broadcast
+    set(float, float) following broadcast
+}
+
+describe Playerc {
+    kick(KickReason, long) following broadcast
+    kick(KickReason) following broadcast
+    kick(String) following broadcast
+    sendMessage(String, Player, String) following broadcast
+    shooting(boolean) following broadcast
 }
 
 describe Rules {

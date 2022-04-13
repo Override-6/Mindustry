@@ -19,6 +19,7 @@ import fr.linkit.api.gnom.cache.sync.contract.descriptor.ContractDescriptorData;
 import fr.linkit.api.gnom.network.Network;
 import fr.linkit.engine.gnom.cache.sync.DefaultSynchronizedObjectCache;
 import fr.linkit.engine.gnom.cache.sync.DefaultSynchronizedObjectCache$;
+import fr.linkit.engine.gnom.cache.sync.instantiation.Constructor;
 import fr.linkit.engine.gnom.cache.sync.instantiation.ContentSwitcher;
 import fr.linkit.engine.gnom.packet.traffic.ChannelScopes;
 import fr.linkit.engine.gnom.packet.traffic.channel.SyncAsyncPacketChannel;
@@ -42,6 +43,7 @@ import mindustry.gen.Groups;
 import mindustry.gen.Player;
 import mindustry.io.JsonIO;
 import mindustry.io.SaveIO;
+import mindustry.linkit.PlayerManager;
 import mindustry.maps.Map;
 import mindustry.maps.MapException;
 import mindustry.maps.Maps.ShuffleMode;
@@ -303,25 +305,20 @@ public class ServerControl implements ApplicationListener {
             thread.start();
 
             info("Server loaded. Type @ for help.", "'help'");
+            Core.app.post(() -> handleCommandString("host Veins sandbox"));
         });
     }
 
     private void openLinkitServer() {
         serverApp.runLater(() -> {
             ServerConnection connection = serverApp.openServerConnection(new ServerConnectionConfigBuilder() {
-                @Override
-                public int port() {
+                @Override public int port() {
                     return port + 1;
                 }
-
-                @Override
-                public String identifier() {
+                @Override public String identifier() {
                     return "LinkitServer";
                 }
-
-                {
-                    defaultPersistenceConfigScript_$eq(Some.apply(Player.class.getResource("/mindustry.sc")));
-                }
+                { defaultPersistenceConfigScript_$eq(Some.apply(Player.class.getResource("/mindustry.sc"))); }
             }.build());
             Network network = connection.network();
             SharedCacheManager global = network.globalCache();
@@ -332,13 +329,13 @@ public class ServerControl implements ApplicationListener {
             {
                 ClassTag<DefaultSynchronizedObjectCache<GameState>> evidence = ClassTag.apply(DefaultSynchronizedObjectCache.class);
                 DefaultSynchronizedObjectCache<GameState> stateCache = global.attachToCache(71, evidence, cast(DefaultSynchronizedObjectCache.apply(contracts, evidence)));
-                Vars.state = stateCache.syncObject(0, new ContentSwitcher(Vars.state));
+                Vars.state = stateCache.syncObject(0, new ContentSwitcher<>(Vars.state));
             }
-            //sync World
+            //sync PlayerManager
             {
-                ClassTag<DefaultSynchronizedObjectCache<World>> evidence = ClassTag.apply(DefaultSynchronizedObjectCache.class);
-                DefaultSynchronizedObjectCache<World> worldCache = global.attachToCache(72, evidence, cast(DefaultSynchronizedObjectCache.apply(contracts, evidence)));
-                Vars.world = worldCache.syncObject(0, new ContentSwitcher(Vars.world));
+                ClassTag<DefaultSynchronizedObjectCache<PlayerManager>> evidence = ClassTag.apply(DefaultSynchronizedObjectCache.class);
+                DefaultSynchronizedObjectCache<PlayerManager> managerCache = global.attachToCache(72, evidence, cast(DefaultSynchronizedObjectCache.apply(contracts, evidence)));
+                managerCache.syncObject(0, new Constructor<>(PlayerManager.class, new Object[0]));
             }
             return null;
         });
